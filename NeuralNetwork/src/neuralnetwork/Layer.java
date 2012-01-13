@@ -10,4 +10,8 @@ package neuralnetwork;
  */
 public class Layer {
     
+    public Layer()
+    {
+        
+    }
 }

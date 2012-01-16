@@ -1,8 +1,9 @@
-
 import digit.DigitImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import neuralnetwork.Layer;
+import neuralnetwork.NeuralNetwork;
 import reader.DigitImageReader;
 
 /**
@@ -15,5 +16,9 @@ public class RunNeuralNetwork {
         DigitImageReader training = new DigitImageReader("/resources/train/train-labels.idx1-ubyte", "/resources/train/train-images.idx3-ubyte");
         List<DigitImage> imageList = new ArrayList<DigitImage>();
         imageList = training.LoadDigitImages();
+        
+        NeuralNetwork neuralNetwork = new NeuralNetwork();
+        Layer inputLayer = new Layer();
+        
     }
 }

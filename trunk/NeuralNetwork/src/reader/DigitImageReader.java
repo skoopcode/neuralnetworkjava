@@ -20,9 +20,9 @@ public class DigitImageReader {
     
     private static final int MAGIC_LABEL = 2049;
     private static final int MAGIC_IMAGE = 2051;
-    private static final int ROWS = 28;
-    private static final int COLUMNS = 28;
-    private static final int IMAGE_SIZE = ROWS * COLUMNS;
+    public static final int ROWS = 28;
+    public static final int COLUMNS = 28;
+    public static final int IMAGE_SIZE = ROWS * COLUMNS;
 
     public DigitImageReader(String label, String image) {
         this._labelFileLocation = label;

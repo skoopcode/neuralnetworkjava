@@ -1,13 +1,11 @@
 package neuralnetwork.activation;
 
-import java.io.Serializable;
-
 /**
  *
  * @author Marcel
  */
-public class HyperbolicTangentActivation implements ActivationFunction, Serializable {
-
+public class HyperbolicTangentActivation implements ActivationFunction {
+    
     @Override
     public double activate(double weight) {
         return Math.tanh(weight);

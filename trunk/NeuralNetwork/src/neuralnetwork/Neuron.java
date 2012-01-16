@@ -15,4 +15,9 @@ public class Neuron implements Serializable{
         af = activationFunction;
     }
     
+    public void ActivateNeuron(Neuron neuron)
+    {
+        
+    }
+    
 }

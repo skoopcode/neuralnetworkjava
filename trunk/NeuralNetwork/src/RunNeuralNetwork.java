@@ -1,5 +1,3 @@
-import com.sun.org.apache.xml.internal.security.algorithms.Algorithm;
-import digit.DigitImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +7,7 @@ import neuralnetwork.NeuralNetwork;
 import neuralnetwork.Neuron;
 import neuralnetwork.activation.HyperbolicTangentActivation;
 import reader.DigitImageReader;
+import digit.DigitImage;
 
 /**
  *
@@ -30,14 +29,14 @@ public class RunNeuralNetwork {
             inputLayer.AddNeuron(neuron);
         }
         
-        Layer hiddenLayer = new Layer();        
+        Layer hiddenLayer = new Layer(inputLayer);        
         for(int i = 0; i < Algorithms.CalculateSizeHiddenLayer(DigitImageReader.IMAGE_SIZE, 10); i++)
         {
             Neuron neuron = new Neuron(new HyperbolicTangentActivation());
             hiddenLayer.AddNeuron(neuron);
         }
         
-        Layer outputLayer = new Layer();
+        Layer outputLayer = new Layer(hiddenLayer);
         for(int i = 0; i < 10; i++)
         {
             Neuron neuron = new Neuron(new HyperbolicTangentActivation());
@@ -46,7 +45,6 @@ public class RunNeuralNetwork {
         
         neuralNetwork.AddLayer(inputLayer);
         neuralNetwork.AddLayer(hiddenLayer);
-        neuralNetwork.AddLayer(outputLayer);
-        
+        neuralNetwork.AddLayer(outputLayer);        
     }
 }

@@ -17,11 +17,10 @@ public class Layer implements Serializable {
         this.neurons = new ArrayList<Neuron>();
     }
 
-    public void AddNeuron(Neuron neuron)
-    {
+    public void AddNeuron(Neuron neuron) {
         neurons.add(neuron);
     }
-    
+
     public void SetNextLayer(Layer layer) {
         this.nextlayer = layer;
     }

@@ -22,18 +22,14 @@ public class RunNeuralNetwork {
         
         NeuralNetwork neuralNetwork = new NeuralNetwork();
         
-        //en.wikipedia.nl/wiki/Artificial_neuron
-        Neuron biasInput = new Neuron(null);
-        biasInput.SetBiasOutput();
-        
         Layer inputLayer = new Layer();
-        inputLayer.SetBias(biasInput);
         for(int i = 0; i < DigitImageReader.IMAGE_SIZE; i++)
         {
             Neuron neuron = new Neuron(new HyperbolicTangentActivation());
             inputLayer.AddNeuron(neuron);
         }
         
+        //set previous layer
         Layer hiddenLayer = new Layer(inputLayer);        
         for(int i = 0; i < Algorithms.CalculateSizeHiddenLayer(DigitImageReader.IMAGE_SIZE, 10); i++)
         {
@@ -41,6 +37,7 @@ public class RunNeuralNetwork {
             hiddenLayer.AddNeuron(neuron);
         }
         
+        //set previous layer
         Layer outputLayer = new Layer(hiddenLayer);
         for(int i = 0; i < 10; i++)
         {

@@ -55,11 +55,5 @@ public class Neuron implements Serializable{
     public void ActivateNeuron(Neuron neuron)
     {
         
-    }
-    
-    public void SetBiasOutput()
-    {
-        output = 1.0;
-    }
-    
+    }        
 }

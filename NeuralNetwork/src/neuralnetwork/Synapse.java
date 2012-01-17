@@ -7,20 +7,26 @@ import java.io.Serializable;
  * @author Marcel Saarloos
  */
 public class Synapse implements Serializable{
-    private Neuron source;
+    private Neuron sourceNeuron;
     private double weight;
     
-    public Neuron getSource()
+    public Synapse(Neuron sourceNeuron, double weight) 
     {
-        return source;
+        this.sourceNeuron = sourceNeuron;
+        this.weight = weight;
     }
     
-    public double getWeight()
+    public Neuron GetSourceNeuron()
+    {
+        return sourceNeuron;
+    }
+    
+    public double GetWeight()
     {
         return weight;
     }
     
-    public void setWeight(double weight)
+    public void SetWeight(double weight)
     {
         this.weight = weight;
     }

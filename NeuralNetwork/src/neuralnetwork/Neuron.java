@@ -41,7 +41,7 @@ public class Neuron implements Serializable {
 
         int i = 0;
         for (Synapse synapse : inputSynapses) {
-            weights[i] = synapse.getWeight();
+            weights[i] = synapse.GetWeight();
             i++;
         }
         return weights;
@@ -68,7 +68,7 @@ public class Neuron implements Serializable {
     private void CalculateWeight() {
         weight = 0;
         for (Synapse synapse : inputSynapses) {
-            weight += synapse.getWeight() * synapse.getSource().GetOutput();
+            weight += synapse.GetWeight() * synapse.GetSourceNeuron().GetOutput();
         }
     }
 }

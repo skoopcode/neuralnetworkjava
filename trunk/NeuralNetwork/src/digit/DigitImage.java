@@ -1,8 +1,8 @@
 package digit;
 
 /**
- *
- * @author Marcel
+ * @author Stef Dijksman
+ * @author Marcel Saarloos
  */
 public class DigitImage {
 

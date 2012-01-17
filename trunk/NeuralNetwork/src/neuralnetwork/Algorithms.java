@@ -1,8 +1,8 @@
 package neuralnetwork;
 
 /**
- *
- * @author Marcel
+ * @author Stef Dijksman
+ * @author Marcel Saarloos
  */
 public class Algorithms {
 

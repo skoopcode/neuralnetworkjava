@@ -6,44 +6,47 @@ import java.util.List;
 import neuralnetwork.activation.ActivationFunction;
 
 /**
- *
- * @author Stef Dijksman, Marcel Saarloos
+ * @author Stef Dijksman
+ * @author Marcel Saarloos
  */
-public class Neuron implements Serializable{
+public class Neuron implements Serializable {
 
     private ActivationFunction af;
-    private double input;
     private double output = 0;
+    private double weight;
     private List<Synapse> inputSynapses;
     private double error;
+    private double derivative;
 
     public Neuron(ActivationFunction activationFunction) {
         inputSynapses = new ArrayList<Synapse>();
         af = activationFunction;
         error = 0;
     }
-    public void AddInputSynapse(Synapse input)
-    {
+
+    public void AddInputSynapse(Synapse input) {
         inputSynapses.add(input);
     }
-    
-    public List<Synapse> GetInputSynapses()
-    {
+
+    public List<Synapse> GetInputSynapses() {
         return this.inputSynapses;
     }
-    
-    public double[] GetWeights() 
-    {
+
+    private double GetOutput() {
+        return output;
+    }
+
+    public double[] GetWeights() {
         double[] weights = new double[inputSynapses.size()];
 
         int i = 0;
-        for(Synapse synapse : inputSynapses) {
+        for (Synapse synapse : inputSynapses) {
             weights[i] = synapse.getWeight();
             i++;
         }
         return weights;
     }
-    
+
     public double GetError() {
         return error;
     }
@@ -51,9 +54,21 @@ public class Neuron implements Serializable{
     public void SetError(double error) {
         this.error = error;
     }
-    
-    public void ActivateNeuron(Neuron neuron)
-    {
-        
-    }        
+
+    public void ActivateNeuron() {
+        CalculateWeight();
+        output = af.Activate(weight);
+        derivative = af.Derivative(weight);
+    }
+
+    public double GetDerivative() {
+        return derivative;
+    }
+
+    private void CalculateWeight() {
+        weight = 0;
+        for (Synapse synapse : inputSynapses) {
+            weight += synapse.getWeight() * synapse.getSource().GetOutput();
+        }
+    }
 }

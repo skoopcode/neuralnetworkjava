@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Marcel
+ * @author Stef Dijksman
+ * @author Marcel Saarloos
  */
 public class Layer implements Serializable {
 
@@ -26,7 +26,13 @@ public class Layer implements Serializable {
     public void AddNeuron(Neuron neuron) {
         neurons.add(neuron);
     }
-
+    
+    public void FeedForward() {
+        for(int i = 0; i < neurons.size(); i++) {
+            neurons.get(i).ActivateNeuron();
+        }
+    }
+    
     public void SetNextLayer(Layer layer) {
         this.nextlayer = layer;
     }

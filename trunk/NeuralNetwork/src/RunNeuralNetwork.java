@@ -10,8 +10,8 @@ import reader.DigitImageReader;
 import digit.DigitImage;
 
 /**
- *
- * @author Marcel
+ * @author Stef Dijksman
+ * @author Marcel Saarloos
  */
 public class RunNeuralNetwork {
     public static void main(String[] args) throws IOException

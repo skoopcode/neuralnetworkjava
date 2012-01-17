@@ -10,8 +10,8 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 
 /**
- *
- * @author Marcel
+ * @author Stef Dijksman
+ * @author Marcel Saarloos
  */
 public class DigitImageReader {
 

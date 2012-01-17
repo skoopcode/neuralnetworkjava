@@ -3,8 +3,8 @@ package neuralnetwork;
 import java.io.Serializable;
 
 /**
- *
  * @author Stef Dijksman
+ * @author Marcel Saarloos
  */
 public class Synapse implements Serializable{
     private Neuron source;

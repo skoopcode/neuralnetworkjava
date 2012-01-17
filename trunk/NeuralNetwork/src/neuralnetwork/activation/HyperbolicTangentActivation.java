@@ -1,18 +1,18 @@
 package neuralnetwork.activation;
 
 /**
- *
- * @author Marcel
+ * @author Stef Dijksman
+ * @author Marcel Saarloos
  */
 public class HyperbolicTangentActivation implements ActivationFunction {
     
     @Override
-    public double activate(double weight) {
+    public double Activate(double weight) {
         return Math.tanh(weight);
     }
 
     @Override
-    public double derivative(double weight) {
+    public double Derivative(double weight) {
         return 1 - Math.pow(Math.tanh(weight), 2);
     }
     

@@ -22,7 +22,12 @@ public class RunNeuralNetwork {
         
         NeuralNetwork neuralNetwork = new NeuralNetwork();
         
-        Layer inputLayer = new Layer();        
+        //en.wikipedia.nl/wiki/Artificial_neuron
+        Neuron biasInput = new Neuron(null);
+        biasInput.SetBiasOutput();
+        
+        Layer inputLayer = new Layer();
+        inputLayer.SetBias(biasInput);
         for(int i = 0; i < DigitImageReader.IMAGE_SIZE; i++)
         {
             Neuron neuron = new Neuron(new HyperbolicTangentActivation());

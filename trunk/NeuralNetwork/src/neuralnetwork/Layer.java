@@ -12,7 +12,7 @@ public class Layer implements Serializable {
 
     private List<Neuron> neurons;
     private Layer nextlayer;
-    private Layer previouslayer;
+    private Layer previousLayer;
 
     public Layer() {
         this.neurons = new ArrayList<Neuron>();
@@ -20,11 +20,43 @@ public class Layer implements Serializable {
 
     public Layer(Layer previousLayer) {
         this.neurons = new ArrayList<Neuron>();
-        this.previouslayer = previousLayer;
+        this.previousLayer = previousLayer;
     }
 
-    public void AddNeuron(Neuron neuron) {
+     public void AddNeuron(Neuron neuron) {
+
         neurons.add(neuron);
+
+        if(previousLayer != null) {
+            for(Neuron previousLayerNeuron : previousLayer.GetNeurons()) {
+                neuron.AddInputSynapse(new Synapse(previousLayerNeuron, (Math.random() * 1) - 0.5)); //initialize with a random weight between -1 and 1
+            }
+        }
+    }
+
+    public void AddNeuron(Neuron neuron, double[] weights) {
+
+        neurons.add(neuron);
+
+        if(previousLayer != null) {
+
+            if(previousLayer.GetNeurons().size() != weights.length) {
+                throw new IllegalArgumentException("The number of weights supplied must be equal to the number of neurons in the previous layer");
+            }
+
+            else {
+                List<Neuron> previousLayerNeurons = previousLayer.GetNeurons();
+                for(int i = 0; i < previousLayerNeurons.size(); i++) {
+                    neuron.AddInputSynapse(new Synapse(previousLayerNeurons.get(i), weights[i]));
+                }
+            }
+
+        }
+    }
+    
+    public List<Neuron> GetNeurons() 
+    {
+        return this.neurons;
     }
     
     public void FeedForward() {
@@ -42,7 +74,7 @@ public class Layer implements Serializable {
     }
 
     public Layer GetPreviousLayer() {
-        return previouslayer;
+        return previousLayer;
     }
     
     public boolean IsOutputLayer() {

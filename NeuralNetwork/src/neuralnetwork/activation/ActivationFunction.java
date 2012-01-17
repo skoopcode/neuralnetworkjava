@@ -1,10 +1,11 @@
 package neuralnetwork.activation;
 
 /**
- *
- * @author Marcel
+ * @author Stef Dijksman
+ * @author Marcel Saarloos
  */
-public interface ActivationFunction {    
-    double activate(double weight);
-    double derivative(double weight);
+public interface ActivationFunction {
+
+    double Activate(double weight);
+    double Derivative(double weight);
 }

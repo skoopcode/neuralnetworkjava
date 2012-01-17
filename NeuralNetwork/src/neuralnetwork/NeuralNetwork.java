@@ -15,8 +15,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
- * @author Marcel
+ * @author Stef Dijksman
+ * @author Marcel Saarloos
  */
 public class NeuralNetwork implements Serializable{
 

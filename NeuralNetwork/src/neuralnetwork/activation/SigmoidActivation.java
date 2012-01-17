@@ -1,22 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package neuralnetwork.activation;
 
 /**
- *
- * @author Marcel
+ * @author Stef Dijksman
+ * @author Marcel Saarloos
  */
 public class SigmoidActivation implements ActivationFunction{
 
     @Override
-    public double activate(double weight) {
+    public double Activate(double weight) {
         return 1.0 / (1 + Math.exp(-1.0 * weight));
     }
 
     @Override
-    public double derivative(double weight) {
+    public double Derivative(double weight) {
         return weight * (1.0 - weight);
     }
     

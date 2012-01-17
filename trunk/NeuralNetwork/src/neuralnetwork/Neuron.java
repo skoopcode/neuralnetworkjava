@@ -13,7 +13,7 @@ public class Neuron implements Serializable{
 
     private ActivationFunction af;
     private double input;
-    private double output = 0.0;
+    private double output = 0;
     private List<Synapse> inputSynapses;
     private double error;
 
@@ -22,17 +22,17 @@ public class Neuron implements Serializable{
         af = activationFunction;
         error = 0;
     }
-    public void addInputSynapse(Synapse input)
+    public void AddInputSynapse(Synapse input)
     {
         inputSynapses.add(input);
     }
     
-    public List<Synapse> getInputSynapses()
+    public List<Synapse> GetInputSynapses()
     {
         return this.inputSynapses;
     }
     
-    public double[] getWeights() 
+    public double[] GetWeights() 
     {
         double[] weights = new double[inputSynapses.size()];
 
@@ -44,11 +44,11 @@ public class Neuron implements Serializable{
         return weights;
     }
     
-    public double getError() {
+    public double GetError() {
         return error;
     }
 
-    public void setError(double error) {
+    public void SetError(double error) {
         this.error = error;
     }
     

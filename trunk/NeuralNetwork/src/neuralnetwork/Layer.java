@@ -19,10 +19,10 @@ public class Layer implements Serializable {
     }
 
     public Layer(Layer previousLayer) {
-        this();
+        this.neurons = new ArrayList<Neuron>();
         this.previouslayer = previousLayer;
     }
-    
+
     public void AddNeuron(Neuron neuron) {
         neurons.add(neuron);
     }
@@ -35,7 +35,11 @@ public class Layer implements Serializable {
         return nextlayer;
     }
 
+    public Layer GetPreviousLayer() {
+        return previouslayer;
+    }
+    
     public boolean IsOutputLayer() {
         return nextlayer == null;
-    }    
+    }
 }

@@ -8,6 +8,7 @@ import neuralnetwork.Neuron;
 import neuralnetwork.activation.HyperbolicTangentActivation;
 import reader.DigitImageReader;
 import digit.DigitImage;
+import digit.MapImages;
 
 /**
  * @author Stef Dijksman
@@ -18,7 +19,6 @@ public class RunNeuralNetwork {
     {
         DigitImageReader training = new DigitImageReader("/resources/train/train-labels.idx1-ubyte", "/resources/train/train-images.idx3-ubyte");
         List<DigitImage> imageList = new ArrayList<DigitImage>();
-        imageList = training.LoadDigitImages();
         
         NeuralNetwork neuralNetwork = new NeuralNetwork();
         
@@ -47,6 +47,9 @@ public class RunNeuralNetwork {
         
         neuralNetwork.AddLayer(inputLayer);
         neuralNetwork.AddLayer(hiddenLayer);
-        neuralNetwork.AddLayer(outputLayer);        
+        neuralNetwork.AddLayer(outputLayer);
+        
+        MapImages mappedImages = new MapImages(training.LoadDigitImages());
+        
     }
 }

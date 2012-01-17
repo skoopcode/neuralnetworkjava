@@ -12,9 +12,11 @@ import neuralnetwork.activation.ActivationFunction;
 public class Neuron implements Serializable{
 
     private ActivationFunction af;
+    private double input;
+    private double output = 0.0;
     private List<Synapse> inputSynapses;
     private double error;
-            
+
     public Neuron(ActivationFunction activationFunction) {
         inputSynapses = new ArrayList<Synapse>();
         af = activationFunction;
@@ -53,6 +55,11 @@ public class Neuron implements Serializable{
     public void ActivateNeuron(Neuron neuron)
     {
         
+    }
+    
+    public void SetBiasOutput()
+    {
+        output = 1.0;
     }
     
 }

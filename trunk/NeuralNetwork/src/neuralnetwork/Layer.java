@@ -50,7 +50,6 @@ public class Layer implements Serializable {
                     neuron.AddInputSynapse(new Synapse(previousLayerNeurons.get(i), weights[i]));
                 }
             }
-
         }
     }
     

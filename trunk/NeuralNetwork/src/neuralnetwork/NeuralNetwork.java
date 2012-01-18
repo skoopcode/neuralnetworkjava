@@ -28,6 +28,24 @@ public class NeuralNetwork implements Serializable{
         layers = new ArrayList<Layer>();
     }
 
+    public double[] GetOutput() {
+
+        double[] outputs = new double[output.GetNeurons().size()];
+
+        for (int i = 1; i < layers.size(); i++) {
+            Layer layer = layers.get(i);
+            layer.FeedForward();
+        }
+
+        int i = 0;
+        for (Neuron neuron : output.GetNeurons()) {
+            outputs[i] = neuron.GetOutput();
+            i++;
+        }
+
+        return outputs;
+    }
+    
     public void AddLayer(Layer layer) {
         layers.add(layer);
 
@@ -104,5 +122,22 @@ public class NeuralNetwork implements Serializable{
             }
         }
         return  nn;
+    }
+
+    public List<Layer> GetLayers() {
+        return layers;
+    }
+
+    public void SetInputs(double[] inputs) {
+        if (input != null) {
+            if (input.GetNeurons().size() - 0 != inputs.length) {
+                throw new IllegalArgumentException("The number of inputs must equal the number of neurons in the input layer");
+            } else {
+                List<Neuron> neurons = input.GetNeurons();
+                for (int i = 0; i < neurons.size(); i++) {
+                    neurons.get(i).SetOutput(inputs[i]);
+                }
+            }
+        }
     }
 }

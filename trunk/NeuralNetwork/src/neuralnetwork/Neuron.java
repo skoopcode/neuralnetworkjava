@@ -32,7 +32,7 @@ public class Neuron implements Serializable {
         return this.inputSynapses;
     }
 
-    private double GetOutput() {
+    public double GetOutput() {
         return output;
     }
 
@@ -70,5 +70,13 @@ public class Neuron implements Serializable {
         for (Synapse synapse : inputSynapses) {
             weight += synapse.GetWeight() * synapse.GetSourceNeuron().GetOutput();
         }
+    }
+
+    public void SetOutput(double output) {
+        this.output = output;
+    }
+
+    public List<Synapse> GetInputs() {
+        return this.inputSynapses;
     }
 }

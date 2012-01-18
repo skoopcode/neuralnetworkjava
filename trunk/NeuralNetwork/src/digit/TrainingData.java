@@ -10,11 +10,11 @@ public class TrainingData {
         this.outputs = outputs;
     }
 
-    public double[][] getInputs() {
+    public double[][] GetInputs() {
         return inputs;
     }
 
-    public double[][] getOutputs() {
+    public double[][] GetOutputs() {
         return outputs;
     }
 }

@@ -10,6 +10,7 @@ import neuralnetwork.activation.HyperbolicTangentActivation;
 import reader.DigitImageReader;
 import digit.DigitImage;
 import digit.MapImages;
+import digit.TrainingData;
 import neuralnetwork.BackPropagation;
 
 /**
@@ -19,7 +20,8 @@ import neuralnetwork.BackPropagation;
 public class RunNeuralNetwork {
 
     public static void main(String[] args) throws IOException {
-        DigitImageReader training = new DigitImageReader("/resources/train/train-labels.idx1-ubyte", "/resources/train/train-images.idx3-ubyte");
+        DigitImageReader trainingData = new DigitImageReader("/resources/train/train-labels.idx1-ubyte", "/resources/train/train-images.idx3-ubyte");
+        DigitImageReader testData = new DigitImageReader("/resources/test/t10k-labels.idx1-ubyte", "/resources/test/t10k-images.idx3-ubyte");
         List<DigitImage> imageList = new ArrayList<DigitImage>();
 
         NeuralNetwork neuralNetwork = new NeuralNetwork();
@@ -50,8 +52,38 @@ public class RunNeuralNetwork {
         neuralNetwork.AddLayer(hiddenLayer);
         neuralNetwork.AddLayer(outputLayer);
 
-        MapImages mappedImages = new MapImages(training.LoadDigitImages());
-        BackPropagation backpropagator = new BackPropagation(neuralNetwork, 0.1, 0.9);
+        MapImages mappedImages = new MapImages(trainingData.LoadDigitImages());
+        BackPropagation backpropagator = new BackPropagation(neuralNetwork, 0.1, 0.1);
         backpropagator.Train(mappedImages, 0.5);
+        
+        
+        MapImages testDataGenerator = new MapImages(testData.LoadDigitImages());
+        TrainingData testTrainingData = testDataGenerator.GetTrainingData();
+
+        for (int i = 0; i < testTrainingData.GetInputs().length; i++) {
+            double[] input = testTrainingData.GetInputs()[i];
+            double[] output = testTrainingData.GetOutputs()[i];
+
+            int digit = 0;
+            boolean found = false;
+            while (digit < 10 && !found) {
+                found = (output[digit] == 1);
+                digit++;
+            }
+
+            neuralNetwork.SetInputs(input);
+            double[] receivedOutput = neuralNetwork.GetOutput();
+
+            double max = receivedOutput[0];
+            double recognizedDigit = 0;
+            for (int j = 0; j < receivedOutput.length; j++) {
+                if (receivedOutput[j] > max) {
+                    max = receivedOutput[j];
+                    recognizedDigit = j;
+                }
+            }
+
+            System.out.println("Recognized " + (digit - 1) + " as " + recognizedDigit + ". Corresponding output value was " + max);
+        }
     }
 }

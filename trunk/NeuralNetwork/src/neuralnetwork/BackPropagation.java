@@ -27,19 +27,25 @@ public class BackPropagation {
 
         double error;
         double sum = 0.0;
-        double average = 60000;
+        double average = 1;
         int epoch = 1;
         int samples = 60000;
         double[] errors = new double[samples];
 
-        do {
-            TrainingData trainingData = generator.GetTrainingData();
+        //checkt of de gemiddelde waarde al kleiner is dan de ingestelde foutwaarde
+        while(average > errorThreshold) {
+           TrainingData trainingData = generator.GetTrainingData();
+            //bereken de error met backpropogate method
             error = Backpropagate(trainingData.GetInputs(), trainingData.GetOutputs());
 
+            // bereken de som met de errorwaarde, voeg de error toe aan de errors lijst
             sum -= errors[epoch % samples];
+            //System.out.println(epoch % samples);
             errors[epoch % samples] = error;
             sum += errors[epoch % samples];
 
+            //als het aantal keer uitvoeren gelijk is aan het aantal samples dan moet er begonnen worden met berekenen van het gemiddelde
+            //TODO: kijken of het ook zonder werkt?
             if(epoch > samples) {
                 average = sum / samples;
             }
@@ -47,7 +53,7 @@ public class BackPropagation {
             System.out.println("Error for epoch " + epoch + ": " + error + ". Average: " + average);
             epoch++;
             currentEpoch = epoch;
-        } while(average > errorThreshold);
+        } 
     }
 
     public double Backpropagate(double[][] inputs, double[][] expectedOutputs) {
@@ -92,6 +98,7 @@ public class BackPropagation {
                                 Synapse synapse = downstreamNeuron.GetInputs().get(l);
 
                                 if (synapse.GetSourceNeuron() == neuron) {
+                                    //hoe berekent hij het gewicht en de error?
                                     sum += (synapse.GetWeight() * downstreamNeuron.GetError());
                                     found = true;
                                 }

@@ -29,7 +29,7 @@ public class Layer implements Serializable {
 
         if(previousLayer != null) {
             for(Neuron previousLayerNeuron : previousLayer.GetNeurons()) {
-                neuron.AddInputSynapse(new Synapse(previousLayerNeuron, (Math.random() * 1) - 0.5)); //initialize with a random weight between -1 and 1
+                neuron.AddInputSynapse(new Synapse(previousLayerNeuron, 0.1*(Math.random() * -0.5))); //initialize with a random weight between -1 and 1
             }
         }
     }

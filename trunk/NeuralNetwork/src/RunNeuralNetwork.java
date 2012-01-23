@@ -2,7 +2,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import neuralnetwork.Algorithms;
 import neuralnetwork.Layer;
 import neuralnetwork.NeuralNetwork;
 import neuralnetwork.Neuron;
@@ -13,7 +12,6 @@ import digit.TrainingData;
 import neuralnetwork.BackPropagation;
 import neuralnetwork.activation.LinearActivation;
 import neuralnetwork.activation.SigmoidActivation;
-import reader.DigitImageLoadingService;
 
 /**
  * @author Stef Dijksman
@@ -22,8 +20,8 @@ import reader.DigitImageLoadingService;
 public class RunNeuralNetwork {
 
     public static void main(String[] args) throws IOException {
-        DigitImageLoadingService trainingData = new DigitImageLoadingService("/resources/train/train-labels.idx1-ubyte", "/resources/train/train-images.idx3-ubyte");
-        DigitImageLoadingService testData = new DigitImageLoadingService("/resources/test/t10k-labels.idx1-ubyte", "/resources/test/t10k-images.idx3-ubyte");
+        DigitImageReader trainingData = new DigitImageReader("/resources/train/train-labels.idx1-ubyte", "/resources/train/train-images.idx3-ubyte");
+        DigitImageReader testData = new DigitImageReader("/resources/test/t10k-labels.idx1-ubyte", "/resources/test/t10k-images.idx3-ubyte");
         List<DigitImage> imageList = new ArrayList<DigitImage>();
 
         NeuralNetwork neuralNetwork = new NeuralNetwork();
@@ -62,38 +60,38 @@ public class RunNeuralNetwork {
         neuralNetwork.AddLayer(hiddenLayer);
         neuralNetwork.AddLayer(outputLayer);
 
-        MapImages mappedImages = new MapImages(trainingData.loadDigitImages());
+        MapImages mappedImages = new MapImages(trainingData.LoadDigitImages());
         BackPropagation backpropagator = new BackPropagation(neuralNetwork, 0.1, 0.1);
-        backpropagator.Train(mappedImages, 0.5);
-
-
-        MapImages testDataGenerator = new MapImages(testData.loadDigitImages());
+        backpropagator.train(mappedImages, 0.5);
+        neuralNetwork.SaveNeuralNetwerkToTextFile();
+        
+        MapImages testDataGenerator = new MapImages(testData.LoadDigitImages());
         TrainingData testTrainingData = testDataGenerator.GetTrainingData();
 
-        for (int i = 0; i < testTrainingData.GetInputs().length; i++) {
-            double[] input = testTrainingData.GetInputs()[i];
-            double[] output = testTrainingData.GetOutputs()[i];
-
-            int digit = 0;
-            boolean found = false;
-            while (digit < 10 && !found) {
-                found = (output[digit] == 1);
-                digit++;
-            }
-
-            neuralNetwork.SetInputs(input);
-            double[] receivedOutput = neuralNetwork.GetOutput();
-
-            double max = receivedOutput[0];
-            double recognizedDigit = 0;
-            for (int j = 0; j < receivedOutput.length; j++) {
-                if (receivedOutput[j] > max) {
-                    max = receivedOutput[j];
-                    recognizedDigit = j;
-                }
-            }
-
-            System.out.println("Recognized " + (digit - 1) + " as " + recognizedDigit + ". Corresponding output value was " + max);
-        }
+//        for (int i = 0; i < testTrainingData.GetInputs().length; i++) {
+//            double[] input = testTrainingData.GetInputs()[i];
+//            double[] output = testTrainingData.GetOutputs()[i];
+//
+//            int digit = 0;
+//            boolean found = false;
+//            while (digit < 10 && !found) {
+//                found = (output[digit] == 1);
+//                digit++;
+//            }
+//
+//            neuralNetwork.SetInputs(input);
+//            double[] receivedOutput = neuralNetwork.GetOutput();
+//
+//            double max = receivedOutput[0];
+//            double recognizedDigit = 0;
+//            for (int j = 0; j < receivedOutput.length; j++) {
+//                if (receivedOutput[j] > max) {
+//                    max = receivedOutput[j];
+//                    recognizedDigit = j;
+//                }
+//            }
+//
+//            System.out.println("Recognized " + (digit - 1) + " as " + recognizedDigit + ". Corresponding output value was " + max);
+//        }
     }
 }

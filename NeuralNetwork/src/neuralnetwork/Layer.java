@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Stef Dijksman
- * @author Marcel Saarloos
- */
 public class Layer implements Serializable {
 
     private List<Neuron> neurons;
@@ -17,10 +13,11 @@ public class Layer implements Serializable {
 
     public Layer() {
         this.neurons = new ArrayList<Neuron>();
+        previousLayer = null;
     }
 
     public Layer(Layer previousLayer) {
-        this.neurons = new ArrayList<Neuron>();
+        this();
         this.previousLayer = previousLayer;
     }
 
@@ -89,6 +86,7 @@ public class Layer implements Serializable {
     public boolean IsOutputLayer() {
         return nextlayer == null;
     }
+    
     public boolean HasBias() {
         return bias != null;
     }

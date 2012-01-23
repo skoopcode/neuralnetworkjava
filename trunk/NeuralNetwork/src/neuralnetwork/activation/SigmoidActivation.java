@@ -1,10 +1,12 @@
 package neuralnetwork.activation;
 
+import java.io.Serializable;
+
 /**
  * @author Stef Dijksman
  * @author Marcel Saarloos
  */
-public class SigmoidActivation implements ActivationFunction{
+public class SigmoidActivation implements ActivationFunction, Serializable{
 
     @Override
     public double Activate(double weight) {

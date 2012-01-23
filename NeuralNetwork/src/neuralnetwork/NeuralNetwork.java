@@ -130,12 +130,15 @@ public class NeuralNetwork implements Serializable{
 
     public void SetInputs(double[] inputs) {
         if (input != null) {
-            if (input.GetNeurons().size() - 0 != inputs.length) {
+            
+            int biasCount = input.HasBias() ? 1 : 0;
+            
+            if (input.GetNeurons().size() - biasCount != inputs.length) {
                 throw new IllegalArgumentException("The number of inputs must equal the number of neurons in the input layer");
             } else {
                 List<Neuron> neurons = input.GetNeurons();
-                for (int i = 0; i < neurons.size(); i++) {
-                    neurons.get(i).SetOutput(inputs[i]);
+                for (int i = biasCount; i < neurons.size(); i++) {
+                    neurons.get(i).SetOutput(inputs[i - biasCount]);
                 }
             }
         }

@@ -67,7 +67,7 @@ public class Neuron implements Serializable {
 
  
     private void CalculateWeight() {
-        weight = 0;
+        weight = 0.0;
         for (Synapse synapse : inputSynapses) {
             weight += synapse.GetWeight() * synapse.GetSourceNeuron().GetOutput();
         }

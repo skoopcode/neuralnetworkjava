@@ -65,6 +65,7 @@ public class Neuron implements Serializable {
         return derivative;
     }
 
+ 
     private void CalculateWeight() {
         weight = 0;
         for (Synapse synapse : inputSynapses) {

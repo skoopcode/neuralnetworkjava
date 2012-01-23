@@ -6,12 +6,14 @@ import neuralnetwork.Algorithms;
 import neuralnetwork.Layer;
 import neuralnetwork.NeuralNetwork;
 import neuralnetwork.Neuron;
-import neuralnetwork.activation.HyperbolicTangentActivation;
 import reader.DigitImageReader;
 import digit.DigitImage;
 import digit.MapImages;
 import digit.TrainingData;
 import neuralnetwork.BackPropagation;
+import neuralnetwork.activation.LinearActivation;
+import neuralnetwork.activation.SigmoidActivation;
+import reader.DigitImageLoadingService;
 
 /**
  * @author Stef Dijksman
@@ -20,31 +22,39 @@ import neuralnetwork.BackPropagation;
 public class RunNeuralNetwork {
 
     public static void main(String[] args) throws IOException {
-        DigitImageReader trainingData = new DigitImageReader("/resources/train/train-labels.idx1-ubyte", "/resources/train/train-images.idx3-ubyte");
-        DigitImageReader testData = new DigitImageReader("/resources/test/t10k-labels.idx1-ubyte", "/resources/test/t10k-images.idx3-ubyte");
+        DigitImageLoadingService trainingData = new DigitImageLoadingService("/resources/train/train-labels.idx1-ubyte", "/resources/train/train-images.idx3-ubyte");
+        DigitImageLoadingService testData = new DigitImageLoadingService("/resources/test/t10k-labels.idx1-ubyte", "/resources/test/t10k-images.idx3-ubyte");
         List<DigitImage> imageList = new ArrayList<DigitImage>();
 
         NeuralNetwork neuralNetwork = new NeuralNetwork();
+        Neuron inputBias = new Neuron(new LinearActivation());
+        inputBias.SetOutput(1);
 
-        Layer inputLayer = new Layer();
+        Layer inputLayer = new Layer(null, inputBias);
+
         for (int i = 0; i < DigitImageReader.IMAGE_SIZE; i++) {
-            Neuron neuron = new Neuron(new HyperbolicTangentActivation());
+            Neuron neuron = new Neuron(new SigmoidActivation());
             inputLayer.AddNeuron(neuron);
         }
+
+        Neuron hiddenBias = new Neuron(new LinearActivation());
+        hiddenBias.SetOutput(1);
+
+        Layer hiddenLayer = new Layer(inputLayer, hiddenBias);
 
         int numberOfHiddenLayerNeurons = 20;
         //int numberOfHiddenLayerNeurons = Algorithms.CalculateSizeHiddenLayer(DigitImageReader.IMAGE_SIZE, 10);
         //set previous layer
-        Layer hiddenLayer = new Layer(inputLayer);
+        //Layer hiddenLayer = new Layer(inputLayer);
         for (int i = 0; i < numberOfHiddenLayerNeurons; i++) {
-            Neuron neuron = new Neuron(new HyperbolicTangentActivation());
+            Neuron neuron = new Neuron(new SigmoidActivation());
             hiddenLayer.AddNeuron(neuron);
         }
 
         //set previous layer
         Layer outputLayer = new Layer(hiddenLayer);
         for (int i = 0; i < 10; i++) {
-            Neuron neuron = new Neuron(new HyperbolicTangentActivation());
+            Neuron neuron = new Neuron(new SigmoidActivation());
             outputLayer.AddNeuron(neuron);
         }
 
@@ -52,12 +62,12 @@ public class RunNeuralNetwork {
         neuralNetwork.AddLayer(hiddenLayer);
         neuralNetwork.AddLayer(outputLayer);
 
-        MapImages mappedImages = new MapImages(trainingData.LoadDigitImages());
+        MapImages mappedImages = new MapImages(trainingData.loadDigitImages());
         BackPropagation backpropagator = new BackPropagation(neuralNetwork, 0.1, 0.1);
         backpropagator.Train(mappedImages, 0.5);
-        
-        
-        MapImages testDataGenerator = new MapImages(testData.LoadDigitImages());
+
+
+        MapImages testDataGenerator = new MapImages(testData.loadDigitImages());
         TrainingData testTrainingData = testDataGenerator.GetTrainingData();
 
         for (int i = 0; i < testTrainingData.GetInputs().length; i++) {

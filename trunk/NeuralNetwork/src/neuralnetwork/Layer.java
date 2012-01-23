@@ -13,6 +13,7 @@ public class Layer implements Serializable {
     private List<Neuron> neurons;
     private Layer nextlayer;
     private Layer previousLayer;
+    private Neuron bias;
 
     public Layer() {
         this.neurons = new ArrayList<Neuron>();
@@ -23,6 +24,12 @@ public class Layer implements Serializable {
         this.previousLayer = previousLayer;
     }
 
+    public Layer(Layer previousLayer, Neuron bias) {
+        this(previousLayer);
+        this.bias = bias;
+        neurons.add(bias);
+    }
+    
      public void AddNeuron(Neuron neuron) {
 
         neurons.add(neuron);
@@ -58,8 +65,11 @@ public class Layer implements Serializable {
         return this.neurons;
     }
     
-    public void FeedForward() {
-        for(int i = 0; i < neurons.size(); i++) {
+   public void FeedForward() {
+
+        int biasCount = HasBias() ? 1 : 0;
+
+        for(int i = biasCount; i < neurons.size(); i++) {
             neurons.get(i).ActivateNeuron();
         }
     }
@@ -78,5 +88,8 @@ public class Layer implements Serializable {
     
     public boolean IsOutputLayer() {
         return nextlayer == null;
+    }
+    public boolean HasBias() {
+        return bias != null;
     }
 }

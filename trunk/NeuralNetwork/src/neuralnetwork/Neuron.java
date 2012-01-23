@@ -58,7 +58,7 @@ public class Neuron implements Serializable {
     public void ActivateNeuron() {
         CalculateWeight();
         output = af.Activate(weight);
-        derivative = af.Derivative(weight);
+        derivative = af.Derivative(output);
     }
 
     public double GetDerivative() {

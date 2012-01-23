@@ -20,6 +20,7 @@ import java.util.List;
  */
 public class NeuralNetwork implements Serializable{
 
+    private static final long serialVersionUID = 2L;
     private List<Layer> layers;
     private Layer input;
     private Layer output;
@@ -56,7 +57,7 @@ public class NeuralNetwork implements Serializable{
             Layer previousLayer = layers.get(layers.size() - 2);
             previousLayer.SetNextLayer(layer);
         }
-        output = layer;
+        output = layers.get(layers.size() - 1);
     }
 
     public void SaveNeuralNetwerkToTextFile() {

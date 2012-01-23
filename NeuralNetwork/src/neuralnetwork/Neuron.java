@@ -12,7 +12,7 @@ import neuralnetwork.activation.ActivationFunction;
 public class Neuron implements Serializable {
 
     private ActivationFunction af;
-    private double output = 0;
+    private double output;
     private double weight;
     private List<Synapse> inputSynapses;
     private double error;
@@ -33,7 +33,7 @@ public class Neuron implements Serializable {
     }
 
     public double GetOutput() {
-        return output;
+        return this.output;
     }
 
     public double[] GetWeights() {
@@ -50,7 +50,7 @@ public class Neuron implements Serializable {
     public double GetError() {
         return error;
     }
-
+    
     public void SetError(double error) {
         this.error = error;
     }
@@ -62,7 +62,7 @@ public class Neuron implements Serializable {
     }
 
     public double GetDerivative() {
-        return derivative;
+        return this.derivative;
     }
 
  

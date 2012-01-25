@@ -2,6 +2,9 @@ package neuralnetwork;
 
 import digit.MapImages;
 import digit.TrainingData;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,15 +22,17 @@ public class BackPropagation {
         this.momentum = momentum;
     }
 
-    public void train(MapImages generator, double errorThreshold) {
+    public void Train(MapImages generator, double errorThreshold) {
 
         double error;
         double sum = 0.0;
-        double average = 490;
+        double average = 1;
         int epoch = 1;
-        int samples = 500;
+        int samples = 60000;
         double[] errors = new double[samples];
 
+        System.out.println("Epoch; Error; Avg; Time;");
+        
         do {
             TrainingData trainingData = generator.GetTrainingData();
             error = Backpropagate(trainingData.GetInputs(), trainingData.GetOutputs());
@@ -40,7 +45,7 @@ public class BackPropagation {
                 average = sum / samples;
             }
 
-            System.out.println("Error for epoch " + epoch + ": " + error + ". Average: " + average);
+            System.out.println(epoch + "; " + error + "; " + average + "; " + getDateTime());
             epoch++;
             currentEpoch = epoch;
         } while(average > errorThreshold);
@@ -146,5 +151,11 @@ public class BackPropagation {
         }
 
         return sum / 2;
+    }
+
+    private String getDateTime() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 }

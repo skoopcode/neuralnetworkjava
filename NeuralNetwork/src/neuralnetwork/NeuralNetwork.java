@@ -90,7 +90,7 @@ public class NeuralNetwork implements Serializable{
         }
     }
     
-    public NeuralNetwork ReadSaveNeuralNetworkFile()
+    public static NeuralNetwork ReadSaveNeuralNetworkFile()
     {
         NeuralNetwork nn = null;
         String fileName = "HandwrittenDigitsNetwork.ser";

@@ -32,6 +32,9 @@ public class Backpropagator implements Serializable {
     private double[] errors;
     private double sum;
     private boolean finished;
+    private TrainingDataGenerator gen;
+    private double errorThreshold;
+    
 
     public Backpropagator(NeuralNetwork neuralNetwork, double learningRate, double momentum) {
         this.neuralNetwork = neuralNetwork;
@@ -47,47 +50,55 @@ public class Backpropagator implements Serializable {
         return finished;
     }
     
+    public void stopTraining(double errorThreshold)
+    {
+        this.errorThreshold = errorThreshold;
+        this.finished = false;
+    }
+    
     public void train(TrainingDataGenerator generator, double errorThreshold) {
 
+        this.gen = generator;
+        this.errorThreshold = errorThreshold;
         double error;
         
         double average = 10;        
         int epoch = 1;
         int samples = 60000;
         
-        if (errors.length <= 0)
+        if (this.errors == null)
         {
-            errors = new double[samples];
+            this.errors = new double[samples];
         }
-        if (sum <= 0)
+        if (this.sum <= 0)
         {
-            sum = 0.0;
+            this.sum = 0.0;
         }
-        if (currentEpoch > 1)
+        if (this.currentEpoch > 1)
         {
-            epoch = currentEpoch;
+            epoch = this.currentEpoch;
         }
         
         System.out.println("Epoch; Error; Avg; Time;");
         
-        while(average > errorThreshold){
-            TrainingData trainingData = generator.getTrainingData();
+        while(average > this.errorThreshold){
+            TrainingData trainingData = gen.getTrainingData();
             error = backpropagate(trainingData.getInputs(), trainingData.getOutputs());
 
-            sum -= errors[epoch % samples];
-            errors[epoch % samples] = error;
-            sum += errors[epoch % samples];
+            this.sum -= this.errors[epoch % samples];
+            this.errors[epoch % samples] = error;
+            this.sum += this.errors[epoch % samples];
 
             if (epoch > samples) {
-                average = sum / samples;
+                average = this.sum / samples;
             }
 
             System.out.println(epoch + ": " + error + "; " + average + "; " + getDateTime() + ";");
             epoch++;
-            currentEpoch = epoch;
+            this.currentEpoch = epoch;
         }
         
-        finished = true;
+        this.finished = true;
     }
 
     public double backpropagate(double[][] inputs, double[][] expectedOutputs) {

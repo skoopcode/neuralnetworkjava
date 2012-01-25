@@ -43,6 +43,34 @@ public class MapImages {
         return new TrainingData(inputs, outputs);
     }
 
+    public TrainingData GetTestData()
+    {
+        digits = Shuffle(digits);
+
+        double[][] inputs = new double[10000][DigitImageReader.IMAGE_SIZE];
+        double[][] outputs = new double[10000][10];
+        
+        int index  = 0;
+        for (int i = 0; i < 10000; i++) {            
+            if (i > 10)
+            {
+                index++;
+            }
+            else {
+                index = i;
+            }
+            if (index == 10)
+            {
+                index = 0;
+            }
+            
+            inputs[i] = GetRandomImageForLabel(digits[index]).GetDigitImagePixels();
+            outputs[i] = GetOutputFor(digits[index]);
+        }
+
+        return new TrainingData(inputs, outputs);
+    }
+    
     private int[] Shuffle(int[] array) {
         Random random = new Random();
         for (int i = array.length - 1; i > 0; i--) {

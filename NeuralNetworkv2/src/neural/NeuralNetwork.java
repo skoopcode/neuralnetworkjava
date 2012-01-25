@@ -103,11 +103,11 @@ public class NeuralNetwork implements Serializable {
     }
 
     public void writeObjectToFile() {
-        String fileName = name.replaceAll(" ", "") + ".ser";
+        String fileName = "HandwrittenDigits.ser";
 
         File f = new File(fileName);
         if (f.exists()) {
-            File reName = new File(name.replaceAll(" ", "") + "-" + new Date().getTime() + ".ser");
+            File reName = new File("HandwrittenDigits-" + new Date().getTime() + ".ser");
             f.renameTo(reName);
         }
 
@@ -134,9 +134,9 @@ public class NeuralNetwork implements Serializable {
         }
     }
 
-    public NeuralNetwork readSavedNeuralNetworkFile() {
+    public static NeuralNetwork readSavedNeuralNetworkFile() {
         NeuralNetwork nn = null;
-        String fileName = name.replaceAll(" ", "") + ".ser";
+        String fileName = "HandwrittenDigits.ser";
         File f = new File(fileName);
 
         if (f.exists()) {

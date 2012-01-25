@@ -1,10 +1,12 @@
 package neural.generator;
 
+import java.io.Serializable;
+
 /**
  * @author Marcel Saarloos
  * @author Stef Dijksman
  */
-public class TrainingData {
+public class TrainingData implements Serializable {
 
     private double[][] inputs;
     private double[][] outputs;

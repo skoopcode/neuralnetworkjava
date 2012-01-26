@@ -60,7 +60,7 @@ public class NeuralNetwork implements Serializable{
         output = layers.get(layers.size() - 1);
     }
 
-    public void SaveNeuralNetwerkToTextFile() {
+    public void SaveObjectToTextFile() {
         String fileName = "HandwrittenDigitsNetwork.ser";
 
         File f = new File(fileName);
@@ -90,7 +90,7 @@ public class NeuralNetwork implements Serializable{
         }
     }
     
-    public static NeuralNetwork ReadSaveNeuralNetworkFile()
+    public static NeuralNetwork ReadSavedNeuralNetworkObject()
     {
         NeuralNetwork nn = null;
         String fileName = "HandwrittenDigitsNetwork.ser";

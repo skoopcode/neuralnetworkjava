@@ -22,7 +22,7 @@ public class RunNeuralNetwork {
 
         NeuralNetwork neuralNetwork = new NeuralNetwork();
 
-        NeuralNetwork temporaryNetwork = NeuralNetwork.ReadSaveNeuralNetworkFile();
+        NeuralNetwork temporaryNetwork = NeuralNetwork.ReadSavedNeuralNetworkObject();
 
         if (temporaryNetwork == null) {
             Layer inputLayer = new Layer();
@@ -36,10 +36,10 @@ public class RunNeuralNetwork {
 
             //int numberOfHiddenLayerNeurons = 20;
 
-            long numberOfHiddenLayerNeurons = Algorithms.CalculateSizeHiddenLayer(DigitImageReader.IMAGE_SIZE, 10);
+            long numberOfHiddenLayerNeurons = Algorithms.CalculateSizeHiddenLayer(DigitImageReader.IMAGE_SIZE, 10); //gives an output of 543 hidden layers
             //set previous layer
             //Layer hiddenLayer = new Layer(inputLayer);
-            for (int i = 0; i < 25; i++) {
+            for (int i = 0; i < numberOfHiddenLayerNeurons; i++) {
                 Neuron neuron = new Neuron(new SigmoidActivation());
                 neuron.SetOutput(0);
                 hiddenLayer.AddNeuron(neuron);
@@ -61,7 +61,7 @@ public class RunNeuralNetwork {
             BackPropagation backpropagator = new BackPropagation(neuralNetwork, 0.1, 0.5);
             backpropagator.Train(mappedImages, 0.1);
 
-            neuralNetwork.SaveNeuralNetwerkToTextFile();
+            neuralNetwork.SaveObjectToTextFile();
         } else {
             neuralNetwork = temporaryNetwork;
         }
@@ -69,7 +69,7 @@ public class RunNeuralNetwork {
         MapImages testDataGenerator = new MapImages(testData.LoadDigitImages());
         TrainingData testTrainingData = testDataGenerator.GetTestData();
 
-        int[] correct = new int[10000];
+        int[] correct = new int[10000]; // total images in the test set
 
         for (int i = 0; i < testTrainingData.GetInputs().length; i++) {
             double[] input = testTrainingData.GetInputs()[i];

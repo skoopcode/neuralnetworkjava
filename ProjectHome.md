@@ -1,0 +1,1 @@
+For the course Statistics we needed to create a neural network which will recognize digits
